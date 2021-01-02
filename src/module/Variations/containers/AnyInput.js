@@ -4,7 +4,8 @@ import data from "../../../data/data.json";
 import { connect } from "react-redux";
 import displayResult from "../../../appRedux/actions/result";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Alert } from 'reactstrap';
+import { Alert, Button } from 'reactstrap';
+
 
 class AnyInput extends Component {
   state = {
@@ -15,6 +16,7 @@ class AnyInput extends Component {
     isTooltipOpen: false,
     displayAlert: false,
     booleanQuery: false,
+    variationsDisplayed: []
   }
 
   getselectword = () => {
@@ -94,7 +96,7 @@ class AnyInput extends Component {
       variations = WordsKeys;
 
       console.log(variations)
-      displayResult(variations,)
+      displayResult(variations)
 
     }
 
@@ -130,21 +132,27 @@ class AnyInput extends Component {
   onAlerDismiss = () => {
     this.setState({ displayAlert: false })
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.result !== this.props.result) {
+      this.setState({ variationsDisplayed: this.props.result })
+    }
+  }
 
 
   render() {
 
-    const { displayAlert } = this.state;
+    const { displayAlert, variationsDisplayed } = this.state;
     const { booleanQuery, result } = this.props
+    console.log(this.state.variationsDisplayed)
     return (
       <div className="input-container">
-        <h4><span>Any</span> of these keywords</h4>
-        <p>Separate the words by comma</p>
+        <span className="boolean">Boolean Query</span>
+        
         <FormGroup>
           <Input type="textarea" name="text" id="text1" rows="6" value={this.state.userInput} onChange={(e) => this.covert(e)} onClick={() => this.getselectword()} />
         </FormGroup>
         <div className="results">
-
+          <Button onClick={() => this.setState({ variationsDisplayed: null, userInput: "" })}>Rest</Button>
           <p>
             Keyword variation
         <span>
@@ -157,7 +165,7 @@ class AnyInput extends Component {
         </Alert  >
           }
           {
-            result && result.map((Item, index) => {
+            variationsDisplayed && variationsDisplayed.map((Item, index) => {
               return (
                 <div className="keyword-variations" key={index}>
                   <span className="main-word">{Item.word}<i className="fa fa-arrow-circle-right arrowIcon"></i></span>

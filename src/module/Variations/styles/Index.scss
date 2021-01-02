@@ -9,12 +9,19 @@
     box-shadow: none;
     border-color: #59b5ac;
   }
-  .custom-control-input:checked~.custom-control-label::before {
+  .custom-control-input:checked ~ .custom-control-label::before {
     border-color: #56b963;
     background-color: #56b963;
   }
   .custom-control-label {
     font-weight: bold;
     color: #7a8287;
+  }
+  .hint {
+    color: #c3c7c9;
+    font-size: 14px;
+    .fa-exclamation-triangle {
+      color: #d7bc6c;
+    }
   }
 }

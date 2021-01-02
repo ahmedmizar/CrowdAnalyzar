@@ -33,7 +33,7 @@ class Index extends Component {
 
         <Row>
           <Col md="12">
-            <p><i className="fa fa-exclamation-triangle"></i> Disclaimer: Special query syntax is not supported yet (i.e user_id:id)</p>
+            <p className="hint"><i className="fa fa-exclamation-triangle"></i> Disclaimer: Special query syntax is not supported yet (i.e user_id:id)</p>
             <AnyInput />
           </Col>
         </Row>
