@@ -1,0 +1,60 @@
+.input-container {
+  h4 {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #7a8287;
+    span {
+      background-color: #59b5ac;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #fff;
+    }
+  }
+  p {
+    color: #7a8287;
+  }
+  .form-control:focus {
+    box-shadow: none;
+  }
+  .results {
+    p {
+      color: #8d8e8e;
+      font-size: 12px;
+      span {
+        color: black;
+      }
+    }
+    .keyword-variations {
+      margin-bottom: 20px;
+      display: flex;
+      .main-word {
+        color: #636d73;
+        font-size: 20px;
+        font-weight: bold;
+        display: block;
+        white-space: nowrap;
+        .arrowIcon {
+          margin-left: 10px;
+        }
+      }
+
+      .variation,
+      .copy-all {
+        background: #59b5ac;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 15px;
+        color: #fff;
+        display: inline-block;
+        padding: 5px 10px;
+        text-align: center;
+
+        margin-bottom: 10px;
+      }
+      .copy-all {
+        background: #475259;
+        cursor: pointer;
+      }
+    }
+  }
+}
