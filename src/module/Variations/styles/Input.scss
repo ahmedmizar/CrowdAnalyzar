@@ -16,7 +16,14 @@
   .form-control:focus {
     box-shadow: none;
   }
+  .total-Char {
+    float: right;
+    clear: right;
+    color: #7a8287;
+    margin-bottom: 20px;
+  }
   .results {
+    
     button {
       float: right;
       clear: right;
