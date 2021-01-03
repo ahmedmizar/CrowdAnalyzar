@@ -6,8 +6,8 @@ import {
   Col,
   CustomInput,
 } from "reactstrap";
-import AnyInput from "./containers/AnyInput";
-import "./styles/Input.scss";
+import BoxInput from "./containers/BoxInput";
+import "./styles/BoxInput.scss";
 import "./styles/Index.scss";
 
 class Index extends Component {
@@ -34,7 +34,7 @@ class Index extends Component {
         <Row>
           <Col md="12">
             <p className="hint"><i className="fa fa-exclamation-triangle"></i> Disclaimer: Special query syntax is not supported yet (i.e user_id:id)</p>
-            <AnyInput />
+            <BoxInput booleanQuery={this.state.booleanQuery} />
           </Col>
         </Row>
 

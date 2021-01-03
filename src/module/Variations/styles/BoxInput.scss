@@ -16,6 +16,9 @@
   .form-control:focus {
     box-shadow: none;
   }
+  textarea {
+    resize: none;
+  }
   .total-Char {
     float: right;
     clear: right;
@@ -23,7 +26,6 @@
     margin-bottom: 20px;
   }
   .results {
-    
     button {
       float: right;
       clear: right;
@@ -56,14 +58,13 @@
       .variation,
       .copy-all {
         background: #59b5ac;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: bold;
         margin-left: 15px;
         color: #fff;
         display: inline-block;
-        padding: 5px 10px;
+        padding: 3px 4px;
         text-align: center;
-
         margin-bottom: 10px;
       }
       .copy-all {
@@ -71,5 +72,16 @@
         cursor: pointer;
       }
     }
+  }
+  .alert {
+    position: fixed;
+    top: 30px;
+    width: 50%;
+    overflow: hidden;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
 }

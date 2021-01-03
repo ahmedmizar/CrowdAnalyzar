@@ -6,7 +6,7 @@ import displayResult from "../../../appRedux/actions/result";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Alert, Button } from "reactstrap";
 
-class AnyInput extends Component {
+class BoxInput extends Component {
   state = {
     userInput: "",
     userInputArr: [],
@@ -14,8 +14,6 @@ class AnyInput extends Component {
     copied: false,
     isTooltipOpen: false,
     displayAlert: false,
-    booleanQuery: false,
-    variationsDisplayed: [],
   };
 
   getselectword = () => {
@@ -31,13 +29,10 @@ class AnyInput extends Component {
 
         if (index === 0 && totalLenth >= curPos) {
           selectedWord = item;
-          console.log(curPos, totalLenth, selectedWord, "1");
         } else if (index > 0 && !selectedWord && totalLenth >= curPos - index) {
           selectedWord = item;
-          console.log(curPos, totalLenth, selectedWord, "2");
         } else if (!selectedWord && totalLenth >= curPos - index) {
           selectedWord = item;
-          console.log(curPos, totalLenth, selectedWord, "3");
         }
       });
     arrayIndex = this.state.userInputArr.findIndex((i) => i === selectedWord);
@@ -55,7 +50,7 @@ class AnyInput extends Component {
     }
 
     this.setState({ selectedWord });
-    console.log(selectedWord, secondWord, thirdWord);
+
     this.getResulte(selectedWord, secondWord, thirdWord, arrayIndex);
   };
 
@@ -64,11 +59,10 @@ class AnyInput extends Component {
     let variations = result;
     let WordsKeys = [];
     let isfound = await this.check(selected);
-    if (isfound) {
+    if (isfound && this.state.userInput !== "") {
       data.map((Item) => {
         if (Item.word === selected) {
           WordsKeys.unshift(Item);
-          console.log(WordsKeys, "1");
         } else if (Item.word === secondSelected) {
           if (WordsKeys.length > 2) {
             WordsKeys.splice(1, 0, Item);
@@ -77,16 +71,13 @@ class AnyInput extends Component {
           } else {
             WordsKeys.push(Item);
           }
-          console.log(WordsKeys, "2");
         } else if (Item.word === thirdSelected) {
           WordsKeys.push(Item);
-          console.log(WordsKeys, "3");
         }
       });
 
       variations = WordsKeys;
 
-      console.log(variations);
       displayResult(variations);
     }
   };
@@ -97,16 +88,9 @@ class AnyInput extends Component {
   };
 
   initializeInput = () => {
-    // let userInputSpaces = this.state.userInput.replace(/\s/g, '')
     let userInputArr = this.state.userInput.split(",");
-    let final = userInputArr.map((elment) => {
-      return elment.trim();
-    });
-    console.log(final);
-
     this.setState({ userInputArr });
   };
-
   async check(selectedWord) {
     const { result } = this.props;
     if (result && result.length > 0 && result[0].word === selectedWord) {
@@ -119,16 +103,21 @@ class AnyInput extends Component {
   onAlerDismiss = () => {
     this.setState({ displayAlert: false });
   };
-  componentDidUpdate(prevProps) {
-    if (prevProps.result !== this.props.result) {
-      this.setState({ variationsDisplayed: this.props.result });
-    }
-  }
 
+  rest = () => {
+    this.props.displayResult("");
+    this.setState({ userInput: "" });
+  };
+  onShowAlert = () => {
+    this.setState({ displayAlert: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ displayAlert: false });
+      }, 1000);
+    });
+  };
   render() {
-    const { displayAlert, variationsDisplayed } = this.state;
+    const { displayAlert } = this.state;
     const { booleanQuery, result } = this.props;
-    console.log(this.state.variationsDisplayed);
     return (
       <div className="input-container">
         <span className="boolean">Boolean Query</span>
@@ -139,9 +128,12 @@ class AnyInput extends Component {
             name="text"
             id="text1"
             rows="6"
+            cols="6"
             value={this.state.userInput}
             onChange={(e) => this.covert(e)}
-            onClick={() => this.getselectword()}
+            onClick={
+              this.state.userInput !== "" ? () => this.getselectword() : null
+            }
             maxLength={450}
           />
         </FormGroup>
@@ -149,13 +141,7 @@ class AnyInput extends Component {
           Total Characters {this.state.userInput.length} / 450
         </div>
         <div className="results">
-          <Button
-            onClick={() =>
-              this.setState({ variationsDisplayed: null, userInput: "" })
-            }
-          >
-            Rest
-          </Button>
+          <Button onClick={this.rest}>Rest</Button>
           <p>
             Keyword variation
             <span>
@@ -171,8 +157,8 @@ class AnyInput extends Component {
               text copied to the clipboard
             </Alert>
           )}
-          {variationsDisplayed &&
-            variationsDisplayed.map((Item, index) => {
+          {result &&
+            result.map((Item, index) => {
               return (
                 <div className="keyword-variations" key={index}>
                   <span className="main-word">
@@ -227,4 +213,4 @@ const mapDispachToProps = (dispach) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispachToProps)(AnyInput);
+export default connect(mapStateToProps, mapDispachToProps)(BoxInput);
